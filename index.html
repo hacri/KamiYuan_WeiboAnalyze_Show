@@ -1,0 +1,176 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"
+          type="text/css"/>
+    <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css"/>
+    <link href="css/AdminLTE.min.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="container">
+    <h1 class="text-center">微博新闻相关信息辅助展示工具</h1>
+</div>
+<div ng-controller="choseUrl as chose">
+    <div class="container" ng-if="!chose.mid">
+        <div class="col-md-6">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">选择微博</h3>
+                </div>
+                <div class="box-body no-padding">
+                    <ul class="list-group">
+                        <li ng-repeat="item in chose.weibo_list" ng-bind="item.weibo_url" class="list-group-item"
+                            ng-click="chose.chose_mid(item.mid)"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-show="chose.mid" class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="box box-success">
+                    <div class="box-body">
+                        <div class="media">
+                            <div class="media-left media-middle">
+                                <img class="media-object img-circle" style="width: 64px;height: 64px;"
+                                     ng-src="http://tp2.sinaimg.cn/{{chose.origin_user.user_id}}/180/0/1">
+                            </div>
+                            <div class="media-body">
+                                @<span ng-bind="chose.origin_user.user_name"></span>
+                                <br>
+                                <span ng-bind="chose.origin_weibo.weibo_content"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        转发：<span ng-bind="chose.origin_weibo.forward_count"></span>
+                    </div>
+                </div>
+
+                <div class="box box-success">
+                    <div class="box-body">
+                        <ul class="timeline">
+                            <li ng-repeat="forward in chose.forward_top_list">
+                                <i class="fa fa-user bg-aqua"></i>
+
+                                <div class="timeline-item">
+                                    <span class="time"><i class="fa fa-clock-o"></i> {{forward.date_str}} </span>
+
+                                    <h3 class="timeline-header"><a
+                                            href="http://weibo.com/u/forward.user_id">@{{forward.user_name}}</a></h3>
+
+                                    <div class="timeline-body" ng-bind="forward.wb_content">
+                                    </div>
+                                    <div class='timeline-footer'>
+                                        转发：{{forward.forward_count}}
+                                        |
+                                        喜欢：{{forward.like_count}}
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="box box-success">
+                    <div class="box-body">
+                        <div class="forward-chart" style="width: 700px; height: 400px;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="box box-success">
+                    <div class="box-header">
+                        搜索区域
+                    </div>
+                    <form class="box-body" target="_blank"
+                          action="http://zh.wikipedia.org/w/index.php"
+                          method="get">
+                        <input type="hidden" name="title" value="Specail:搜索">
+                        <input type="hidden" name="go" value="前往">
+
+                        查询陌生词汇：
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="搜索内容" name="search">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="submit"
+                                        ><i class="glyphicon glyphicon-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="info-box bg-green">
+                    <span class="info-box-icon">
+                        <i class="fa fa-envelope-o"></i>
+                    </span>
+
+                    <div class="info-box-content">
+                        <h4>其他相关微博</h4>
+                        <h5>关键词：重水 转基因 黄金大米，以下为相关信息</h5>
+                    </div>
+                </div>
+
+                <div class="box box-success">
+                    <div class="box-header">
+                        相关微博
+                    </div>
+                    <div class="box-body">
+                        <div class="media">
+                            <div class="media-left media-middle">
+                                <img class="media-object img-circle" style="width: 64px;height: 64px;"
+                                     ng-src="http://tp2.sinaimg.cn/{{chose.origin_user.user_id}}/180/0/1">
+                            </div>
+                            <div class="media-body">
+                                @<span ng-bind="chose.origin_user.user_name"></span>
+                                <br>
+                                <span ng-bind="chose.origin_weibo.weibo_content"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="box box-success">
+                    <div class="box-header">
+                        相关新闻
+                    </div>
+                    <div class="box-body">
+                        <div class="media">
+                            <div class="media-left media-middle">
+                                <img class="media-object img-circle" style="width: 64px;height: 64px;"
+                                     ng-src="http://tp2.sinaimg.cn/{{chose.origin_user.user_id}}/180/0/1">
+                            </div>
+                            <div class="media-body">
+                                @<span ng-bind="chose.origin_user.user_name"></span>
+                                <br>
+                                <span ng-bind="chose.origin_weibo.weibo_content"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/angular.js/1.3.15/angular.min.js"></script>
+<script src="js/echarts-all.js"></script>
+
+<script src="main.js"></script>
+</body>
+</html>
