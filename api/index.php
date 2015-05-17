@@ -48,6 +48,27 @@ $app->get('/weibo/:mid/count', function ($mid) {
     var_dump($q->fetch());
 });
 
+$app->get('/weibo/:mid/stat/:num', function ($mid, $num) {
+    global $pdo;
+
+    $q = $pdo->prepare('SELECT * FROM forward_stat WHERE origin_mid = :mid ORDER BY `count` DESC LIMIT :num');
+    $q->bindValue(':mid', $mid);
+    $q->bindValue(':num', (int)$num, PDO::PARAM_INT);
+    $q->execute();
+
+    $data = $q->fetchAll(PDO::FETCH_ASSOC);
+    $result = [
+        'key' => [],
+        'value' => [],
+    ];
+
+    foreach ($data as &$item) {
+        $result['key'][] = $item['word'];
+        $result['value'][] = $item['count'];
+    }
+    echo json_encode($result);
+});
+
 $app->get('/weibo/:mid/top/:num', function ($mid, $num) {
     global $pdo;
     $sql = <<<SQL

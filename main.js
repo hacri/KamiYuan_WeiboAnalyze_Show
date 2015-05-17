@@ -29,55 +29,59 @@ angular.module('app', []).
                 chose.forward_top_list = data;
             });
 
-            var myChart = echarts.init($('.forward-chart')[0]);
-            var option = {
-                title: {
-                    x: 'center',
-                    text: '转发内容中关键词出现次数'
-                },
-                tooltip: {
-                    trigger: 'item'
-                },
-                toolbox: {
-                    show: false
-                },
-                calculable: true,
-                grid: {
-                    borderWidth: 0,
-                    y: 80,
-                    y2: 60
-                },
-                xAxis: [
-                    {
-                        type: 'category',
-                        show: false,
-                        data: ['贵', '傻', '浇灌', '标记']
-                    }
-                ],
-                yAxis: [
-                    {
-                        type: 'value',
-                        show: true
-                    }
-                ],
-                series: [
-                    {
-                        name: '次数',
-                        type: 'bar',
-                        itemStyle: {
-                            normal: {
-                                label: {
-                                    show: true,
-                                    position: 'top',
-                                    formatter: '{b}\n{c}'
+            $http.get('/api/weibo/' + mid + '/stat/10').success(function (data) {
+                var myChart = echarts.init($('.forward-chart')[0]);
+                var option = {
+                    title: {
+                        x: 'center',
+                        text: '转发内容中关键词出现次数'
+                    },
+                    tooltip: {
+                        trigger: 'item'
+                    },
+                    toolbox: {
+                        show: false
+                    },
+                    calculable: true,
+                    grid: {
+                        borderWidth: 0,
+                        y: 80,
+                        y2: 60
+                    },
+                    xAxis: [
+                        {
+                            type: 'category',
+                            show: false,
+                            data: data.key
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value',
+                            show: true
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '次数',
+                            type: 'bar',
+                            itemStyle: {
+                                normal: {
+                                    label: {
+                                        show: true,
+                                        position: 'top',
+                                        formatter: '{b}\n{c}'
+                                    }
                                 }
-                            }
-                        },
-                        data: [342, 127, 142, 49]
-                    }
-                ]
-            };
-            myChart.setOption(option);
+                            },
+                            data: data.value
+                        }
+                    ]
+                };
+                myChart.setOption(option);
+            });
+
+
         };
 
         chose.mid = 0;
