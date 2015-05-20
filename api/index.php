@@ -57,16 +57,25 @@ $app->get('/weibo/:mid/stat/:num', function ($mid, $num) {
     $q->execute();
 
     $data = $q->fetchAll(PDO::FETCH_ASSOC);
-    $result = [
-        'key' => [],
-        'value' => [],
-    ];
 
+    $result = [];
     foreach ($data as &$item) {
-        $result['key'][] = $item['word'];
-        $result['value'][] = $item['count'];
+        $result[] = [
+            'text' => $item['word'],
+            'weight' => $item['count'],
+        ];
     }
     echo json_encode($result);
+//    $result = [
+//        'key' => [],
+//        'value' => [],
+//    ];
+//
+//    foreach ($data as &$item) {
+//        $result['key'][] = $item['word'];
+//        $result['value'][] = $item['count'];
+//    }
+//    echo json_encode($result);
 });
 
 $app->get('/weibo/:mid/top/:num', function ($mid, $num) {
@@ -84,6 +93,11 @@ SQL;
     $q->execute();
 
     $data = $q->fetchAll(PDO::FETCH_ASSOC);
+
+    usort($data, function (&$a, &$b) {
+        return $a['date'] < $b['date'];
+    });
+
     foreach ($data as &$item) {
         $item['date_str'] = date('Y-m-d H:i:s', $item['date']);
     }

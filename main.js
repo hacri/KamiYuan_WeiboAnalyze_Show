@@ -25,60 +25,75 @@ angular.module('app', []).
                 });
             });
 
-            $http.get('/api/weibo/' + mid + '/top/10').success(function (data) {
+            $http.get('/api/weibo/' + mid + '/top/15').success(function (data) {
                 chose.forward_top_list = data;
             });
 
-            $http.get('/api/weibo/' + mid + '/stat/10').success(function (data) {
-                var myChart = echarts.init($('.forward-chart')[0]);
-                var option = {
-                    title: {
-                        x: 'center',
-                        text: '转发内容中关键词出现次数'
-                    },
-                    tooltip: {
-                        trigger: 'item'
-                    },
-                    toolbox: {
-                        show: false
-                    },
-                    calculable: true,
-                    grid: {
-                        borderWidth: 0,
-                        y: 80,
-                        y2: 60
-                    },
-                    xAxis: [
-                        {
-                            type: 'category',
-                            show: false,
-                            data: data.key
-                        }
-                    ],
-                    yAxis: [
-                        {
-                            type: 'value',
-                            show: true
-                        }
-                    ],
-                    series: [
-                        {
-                            name: '次数',
-                            type: 'bar',
-                            itemStyle: {
-                                normal: {
-                                    label: {
-                                        show: true,
-                                        position: 'top',
-                                        formatter: '{b}\n{c}'
-                                    }
-                                }
-                            },
-                            data: data.value
-                        }
-                    ]
-                };
-                myChart.setOption(option);
+            var get_word_weibo = function () {
+                console.log($(this).text());
+            };
+
+            $http.get('/api/weibo/' + mid + '/stat/100').success(function (data) {
+
+                for (var i in data) {
+                    data[i].handlers = {click: get_word_weibo};
+                }
+
+                $('.forward-chart').jQCloud(data, {
+                    width: 700,
+                    height: 400
+                });
+                //var myChart = echarts.init($('.forward-chart')[0]);
+                //var option = {
+                //    title: {
+                //        x: 'center',
+                //        text: '转发内容中关键词出现次数'
+                //    },
+                //    tooltip: {
+                //        trigger: 'item'
+                //    },
+                //    toolbox: {
+                //        show: false
+                //    },
+                //    calculable: true,
+                //    grid: {
+                //        borderWidth: 0,
+                //        y: 80,
+                //        y2: 60
+                //    },
+                //    xAxis: [
+                //        {
+                //            type: 'category',
+                //            show: false,
+                //            data: data.key
+                //        }
+                //    ],
+                //    yAxis: [
+                //        {
+                //            type: 'value',
+                //            show: true
+                //        }
+                //    ],
+                //    series: [
+                //        {
+                //            name: '次数',
+                //            type: 'bar',
+                //            itemStyle: {
+                //                normal: {
+                //                    label: {
+                //                        show: true,
+                //                        position: 'top',
+                //                        formatter: '{b}\n{c}'
+                //                    }
+                //                }
+                //            },
+                //            data: data.value
+                //        }
+                //    ]
+                //};
+                //myChart.setOption(option);
+
+
             });
 
 
