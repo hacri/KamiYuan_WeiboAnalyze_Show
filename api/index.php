@@ -104,6 +104,37 @@ SQL;
     echo json_encode($data);
 });
 
+$app->get('/weibo/:mid/word/:word/:num', function ($mid, $word, $num) {
+    global $pdo;
+
+    $sql = <<<SQL
+SELECT *, (forward_count + like_count  * 0.5 + LENGTH(wb_content_main) / 10) as forward_mark FROM `forward_info`
+JOIN `user_info` ON `user_info`.`user_id` = `forward_info`.`user_id`
+WHERE origin_mid = :mid
+AND `forward_info`.`wb_content_main` LIKE :word
+ORDER BY forward_mark DESC
+LIMIT :num
+SQL;
+
+    $q = $pdo->prepare($sql);
+    $q->bindValue(':mid', $mid);
+    $q->bindValue(':word', "%$word%");
+    $q->bindValue(':num', (int)$num, PDO::PARAM_INT);
+    $q->execute();
+
+    $data = $q->fetchAll(PDO::FETCH_ASSOC);
+
+    usort($data, function (&$a, &$b) {
+        return $a['date'] < $b['date'];
+    });
+
+    foreach ($data as &$item) {
+        $item['date_str'] = date('Y-m-d H:i:s', $item['date']);
+    }
+
+    echo json_encode($data);
+});
+
 $app->get('/user/:uid', function ($uid) {
     global $pdo;
     $sql = <<<SQL

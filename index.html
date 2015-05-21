@@ -8,6 +8,7 @@
     <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css"/>
     <link href="css/AdminLTE.min.css" rel="stylesheet" type="text/css"/>
     <link href="css/jqcloud.css" rel="stylesheet" type="text/css"/>
+    <link href="css/add.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div class="container">
@@ -77,11 +78,7 @@
                     </div>
                 </div>
 
-                <div class="box box-success">
-                    <div class="box-body">
-                        <div class="forward-chart" style="width: 700px; height: 400px;"></div>
-                    </div>
-                </div>
+
             </div>
 
             <div class="col-md-4">
@@ -105,6 +102,45 @@
                             </span>
                         </div>
                     </form>
+                </div>
+
+                <div class="box box-success">
+                    <div class="box-body">
+                        <div class="forward-chart" style="width: 340px; height: 400px;"></div>
+                    </div>
+                </div>
+
+                <div class="box box-success" ng-if="!!chose.word_like_list">
+                    <div class="box-body">
+                        <div class="">
+                            <div class="media" ng-repeat="forward in chose.word_like_list">
+                                <div class="media-left media-middle">
+                                    <img class="media-object img-circle" style="width: 64px;height: 64px;"
+                                         ng-src="http://tp1.sinaimg.cn/{{forward.user_id}}/180/0/1">
+                                </div>
+                                <div class="media-body">
+                                    <div class="media-heading">
+                                        <span class="time pull-right"><i
+                                                class="fa fa-clock-o"></i> {{forward.date_str}} </span>
+                                        <span class="timeline-header"><a
+                                                href="http://weibo.com/u/forward.user_id">@{{forward.user_name}}</a>
+                                        </span>
+                                    </div>
+
+                                    <span ng-bind="forward.wb_content"></span>
+
+                                    <br>
+                                    <div class="media-bottom pull-right">
+                                        转发：{{forward.forward_count}}
+                                        |
+                                        喜欢：{{forward.like_count}}
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

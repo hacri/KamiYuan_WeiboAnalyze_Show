@@ -8,11 +8,22 @@ angular.module('app', []).
             }).error(function (data, status, headers, config) {
 
             });
+
+        chose.mid = null;
         chose.weibo_list = [];
         chose.origin_weibo = {};
         chose.origin_user = {};
 
         chose.forward_top_list = [];
+        chose.word_like_list = [];
+
+        var get_word_weibo = function () {
+            var word = $(this).text();
+            var url = '/api/weibo/' + chose.mid + '/word/' + word + '/10';
+            $http.get(url).success(function (data) {
+                chose.word_like_list = data;
+            })
+        };
 
         chose.chose_mid = function (mid) {
             chose.mid = mid;
@@ -29,10 +40,6 @@ angular.module('app', []).
                 chose.forward_top_list = data;
             });
 
-            var get_word_weibo = function () {
-                console.log($(this).text());
-            };
-
             $http.get('/api/weibo/' + mid + '/stat/100').success(function (data) {
 
                 for (var i in data) {
@@ -40,7 +47,7 @@ angular.module('app', []).
                 }
 
                 $('.forward-chart').jQCloud(data, {
-                    width: 700,
+                    width: 340,
                     height: 400
                 });
                 //var myChart = echarts.init($('.forward-chart')[0]);
