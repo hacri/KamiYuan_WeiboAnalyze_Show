@@ -130,6 +130,7 @@
                                     <span ng-bind="forward.wb_content"></span>
 
                                     <br>
+
                                     <div class="media-bottom pull-right">
                                         转发：{{forward.forward_count}}
                                         |
@@ -163,15 +164,18 @@
                         相关微博
                     </div>
                     <div class="box-body">
-                        <div class="media">
+                        <div class="media" ng-repeat="news in chose.weibo_news">
                             <div class="media-left media-middle">
                                 <img class="media-object img-circle" style="width: 64px;height: 64px;"
-                                     ng-src="http://tp2.sinaimg.cn/{{chose.origin_user.user_id}}/180/0/1">
+                                     ng-src="http://tp2.sinaimg.cn/{{news.user_id}}/180/0/1">
                             </div>
                             <div class="media-body">
-                                @<span ng-bind="chose.origin_user.user_name"></span>
+                                @<span ng-bind="news.user_name"></span>
                                 <br>
-                                <span ng-bind="chose.origin_weibo.weibo_content"></span>
+                                <span ng-bind="news.content"></span>
+                                <br>
+                                <a ng-href="{{news.picture}}" ng-if="!!news.picture">图片</a> |
+                                <a ng-href="{{news.url}}" ng-if="!!news.url">原微博</a>
                             </div>
                         </div>
                     </div>
@@ -183,16 +187,21 @@
                         相关新闻
                     </div>
                     <div class="box-body">
-                        <div class="media">
+                        <div class="media" ng-repeat="news in chose.other_naws">
                             <div class="media-left media-middle">
-                                <img class="media-object img-circle" style="width: 64px;height: 64px;"
-                                     ng-src="http://tp2.sinaimg.cn/{{chose.origin_user.user_id}}/180/0/1">
+
                             </div>
                             <div class="media-body">
-                                @<span ng-bind="chose.origin_user.user_name"></span>
+                                <h4 ng-bind="news.title"></h4>
+                                <span ng-bind="news.pubdate"></span>
                                 <br>
-                                <span ng-bind="chose.origin_weibo.weibo_content"></span>
+                                <br>
+                                <p style="max-height: 100px;overflow: hidden" ng-bind-html="chose.theHtml(news.body)"></p>
+                                <br>
+                                <a ng-href="{{news.link}}">原链接</a> |
+                                <a ng-href="{{news.samenews_url}}">相似新闻（{{news.samenews_count}}）</a>
                             </div>
+                            <hr>
                         </div>
                     </div>
                 </div>

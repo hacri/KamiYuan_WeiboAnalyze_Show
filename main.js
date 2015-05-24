@@ -1,5 +1,5 @@
 angular.module('app', []).
-    controller('choseUrl', function ($http) {
+    controller('choseUrl', function ($http, $sce) {
 
         var chose = this;
         $http.get('/api/weibo/list')
@@ -16,6 +16,9 @@ angular.module('app', []).
 
         chose.forward_top_list = [];
         chose.word_like_list = [];
+
+        chose.weibo_news = [];
+        chose.other_naws = [];
 
         var get_word_weibo = function () {
             var word = $(this).text();
@@ -50,61 +53,20 @@ angular.module('app', []).
                     width: 340,
                     height: 400
                 });
-                //var myChart = echarts.init($('.forward-chart')[0]);
-                //var option = {
-                //    title: {
-                //        x: 'center',
-                //        text: '转发内容中关键词出现次数'
-                //    },
-                //    tooltip: {
-                //        trigger: 'item'
-                //    },
-                //    toolbox: {
-                //        show: false
-                //    },
-                //    calculable: true,
-                //    grid: {
-                //        borderWidth: 0,
-                //        y: 80,
-                //        y2: 60
-                //    },
-                //    xAxis: [
-                //        {
-                //            type: 'category',
-                //            show: false,
-                //            data: data.key
-                //        }
-                //    ],
-                //    yAxis: [
-                //        {
-                //            type: 'value',
-                //            show: true
-                //        }
-                //    ],
-                //    series: [
-                //        {
-                //            name: '次数',
-                //            type: 'bar',
-                //            itemStyle: {
-                //                normal: {
-                //                    label: {
-                //                        show: true,
-                //                        position: 'top',
-                //                        formatter: '{b}\n{c}'
-                //                    }
-                //                }
-                //            },
-                //            data: data.value
-                //        }
-                //    ]
-                //};
-                //myChart.setOption(option);
-
-
             });
 
+            $http.get('/api/weibo/' + mid + '/news/0').success(function (data) {
+                chose.weibo_news = data;
+            });
+            $http.get('/api/weibo/' + mid + '/news/1').success(function (data) {
+                chose.other_naws = data;
+            });
 
         };
 
         chose.mid = 0;
+
+        chose.theHtml = function (raw_html) {
+            return $sce.trustAsHtml(raw_html);
+        }
     });

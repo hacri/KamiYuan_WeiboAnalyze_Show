@@ -104,6 +104,36 @@ SQL;
     echo json_encode($data);
 });
 
+$app->get('/weibo/:mid/news/:type', function ($mid, $type) {
+    global $pdo;
+
+    if ($type == 0) {
+        $db = 'weibo_news';
+    } else {
+        $db = 'other_news';
+    }
+
+    $sql = <<<SQL
+SELECT * FROM `{$db}`
+WHERE `origin_mid` = :mid
+SQL;
+
+    $q = $pdo->prepare($sql);
+    $q->bindValue(':mid', $mid);
+
+    $q->execute();
+
+    $data = $q->fetchAll(PDO::FETCH_ASSOC);
+
+    if ($type != 0) {
+        foreach ($data as &$item) {
+            $item['body'] = nl2br(htmlspecialchars($item['body']));
+        }
+    }
+
+    echo json_encode($data);
+});
+
 $app->get('/weibo/:mid/word/:word/:num', function ($mid, $word, $num) {
     global $pdo;
 
