@@ -102,6 +102,13 @@
                             </span>
                         </div>
                     </form>
+
+                    <div class="box-body" ng-repeat="search_item in chose.search">
+                        <p>关键词：<span ng-bind="search_item.keyword"></span></p>
+                        <img class="pull-right" width="100px;" ng-src="{{search_item.picture}}">
+                        <p ng-bind="search_item.body"></p>
+                        <a ng-href="{{search_item.wiki_link}}">维基百科</a>
+                    </div>
                 </div>
 
                 <div class="box box-success">
@@ -196,7 +203,9 @@
                                 <span ng-bind="news.pubdate"></span>
                                 <br>
                                 <br>
-                                <p style="max-height: 100px;overflow: hidden" ng-bind-html="chose.theHtml(news.body)"></p>
+
+                                <p style="max-height: 100px;overflow: hidden"
+                                   ng-bind-html="chose.theHtml(news.body)"></p>
                                 <br>
                                 <a ng-href="{{news.link}}">原链接</a> |
                                 <a ng-href="{{news.samenews_url}}">相似新闻（{{news.samenews_count}}）</a>

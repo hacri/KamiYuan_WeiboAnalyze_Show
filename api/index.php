@@ -134,6 +134,24 @@ SQL;
     echo json_encode($data);
 });
 
+$app->get('/weibo/:mid/search', function ($mid) {
+    global $pdo;
+
+    $sql = <<<SQL
+SELECT * FROM `search`
+WHERE `origin_mid` = :mid
+SQL;
+
+    $q = $pdo->prepare($sql);
+    $q->bindValue(':mid', $mid);
+
+    $q->execute();
+
+    $data = $q->fetchAll(PDO::FETCH_ASSOC);
+
+    echo json_encode($data);
+});
+
 $app->get('/weibo/:mid/word/:word/:num', function ($mid, $word, $num) {
     global $pdo;
 

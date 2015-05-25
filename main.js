@@ -20,6 +20,8 @@ angular.module('app', []).
         chose.weibo_news = [];
         chose.other_naws = [];
 
+        chose.search = [];
+
         var get_word_weibo = function () {
             var word = $(this).text();
             var url = '/api/weibo/' + chose.mid + '/word/' + word + '/10';
@@ -60,6 +62,10 @@ angular.module('app', []).
             });
             $http.get('/api/weibo/' + mid + '/news/1').success(function (data) {
                 chose.other_naws = data;
+            });
+
+            $http.get('/api/weibo/' + mid + '/search').success(function (data) {
+                chose.search = data;
             });
 
         };
