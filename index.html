@@ -54,6 +54,9 @@
                 </div>
 
                 <div class="box box-success">
+                    <div class="box-header">
+                        <h3 class="box-title">微博重要转发</h3>
+                    </div>
                     <div class="box-body">
                         <ul class="timeline">
                             <li ng-repeat="forward in chose.forward_top_list">
@@ -62,10 +65,19 @@
                                 <div class="timeline-item">
                                     <span class="time"><i class="fa fa-clock-o"></i> {{forward.date_str}} </span>
 
-                                    <h3 class="timeline-header"><a
-                                            ng-href="http://weibo.com/u/{{forward.user_id}}">@{{forward.user_name}}</a></h3>
+                                    <h3 class="timeline-header">
+                                        <a target="_blank"
+                                           ng-href="http://weibo.com/u/{{forward.user_id}}">@{{forward.user_name}}</a>
+                                    </h3>
 
-                                    <div class="timeline-body" ng-bind="forward.wb_content">
+                                    <div class="timeline-body">
+                                        <div class="media">
+                                            <div class="media-left media-middle">
+                                                <img class="media-object img-circle" style="width: {{forward.weight * 64 + 32}}px;height: {{forward.weight * 64 + 32}}px;"
+                                                     ng-src="http://tp1.sinaimg.cn/{{forward.user_id}}/180/0/1">
+                                            </div>
+                                            <div class="media-body" ng-bind="forward.wb_content"></div>
+                                        </div>
                                     </div>
                                     <div class='timeline-footer'>
                                         转发：{{forward.forward_count}}
@@ -84,7 +96,7 @@
             <div class="col-md-4">
                 <div class="box box-success">
                     <div class="box-header">
-                        搜索区域
+                        词语解释
                     </div>
                     <form class="box-body" target="_blank"
                           action="http://zh.wikipedia.org/w/index.php"
@@ -92,7 +104,7 @@
                         <input type="hidden" name="title" value="Specail:搜索">
                         <input type="hidden" name="go" value="前往">
 
-                        查询陌生词汇：
+                        还有不懂的词语可以进行搜索：
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="搜索内容" name="search">
                             <span class="input-group-btn">
@@ -106,6 +118,7 @@
                     <div class="box-body" ng-repeat="search_item in chose.search">
                         <p>关键词：<span ng-bind="search_item.keyword"></span></p>
                         <img class="pull-right" width="100px;" ng-src="{{search_item.picture}}">
+
                         <p ng-bind="search_item.body"></p>
                         <a ng-href="{{search_item.wiki_link}}">维基百科</a>
                     </div>
@@ -115,10 +128,8 @@
                     <div class="box-body">
                         <div class="forward-chart" style="width: 340px; height: 400px;"></div>
                     </div>
-                </div>
 
-                <div class="box box-success" ng-if="!!chose.word_like_list">
-                    <div class="box-body">
+                    <div class="box-body" ng-if="!!chose.word_like_list">
                         <div class="">
                             <div class="media" ng-repeat="forward in chose.word_like_list">
                                 <div class="media-left media-middle">
@@ -129,12 +140,13 @@
                                     <div class="media-heading">
                                         <span class="time pull-right"><i
                                                 class="fa fa-clock-o"></i> {{forward.date_str}} </span>
-                                        <span class="timeline-header"><a
-                                                href="http://weibo.com/u/forward.user_id">@{{forward.user_name}}</a>
+                                        <span class="timeline-header">
+                                            <a target="_blank"
+                                               ng-href="http://weibo.com/u/{{forward.user_id}}">@{{forward.user_name}}</a>
                                         </span>
                                     </div>
 
-                                    <span ng-bind="forward.wb_content"></span>
+                                    <span ng-bind-html="chose.theHtml(forward.wb_content)"></span>
 
                                     <br>
 
@@ -150,25 +162,20 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <div class="info-box bg-green">
-                    <span class="info-box-icon">
-                        <i class="fa fa-envelope-o"></i>
-                    </span>
-
-                    <div class="info-box-content">
-                        <h4>其他相关微博</h4>
-                        <h5>关键词：重水 转基因 黄金大米，以下为相关信息</h5>
-                    </div>
-                </div>
 
                 <div class="box box-success">
                     <div class="box-header">
-                        相关微博
+                        <h3 class="box-title">相关微博</h3>
+
+                        <!--<div class="box-tools pull-right">-->
+                            <!--<a class="btn btn-success btn-xs">更多</a>-->
+                        <!--</div>-->
                     </div>
                     <div class="box-body">
                         <div class="media" ng-repeat="news in chose.weibo_news">
@@ -181,17 +188,20 @@
                                 <br>
                                 <span ng-bind="news.content"></span>
                                 <br>
-                                <a ng-href="{{news.picture}}" ng-if="!!news.picture">图片</a> |
-                                <a ng-href="{{news.url}}" ng-if="!!news.url">原微博</a>
+                                <a target="_blank" ng-href="{{news.picture}}" ng-if="!!news.picture">图片</a> |
+                                <a target="_blank" ng-href="{{news.url}}" ng-if="!!news.url">原微博</a>
                             </div>
                         </div>
                     </div>
                 </div>
 
-
                 <div class="box box-success">
                     <div class="box-header">
-                        相关新闻
+                        <h3 class="box-title">相关新闻</h3>
+
+                        <!--<div class="box-tools pull-right">-->
+                            <!--<a class="btn btn-success btn-xs">更多</a>-->
+                        <!--</div>-->
                     </div>
                     <div class="box-body">
                         <div class="media" ng-repeat="news in chose.other_naws">
@@ -207,8 +217,8 @@
                                 <p style="max-height: 100px;overflow: hidden"
                                    ng-bind-html="chose.theHtml(news.body)"></p>
                                 <br>
-                                <a ng-href="{{news.link}}">原链接</a> |
-                                <a ng-href="{{news.samenews_url}}">相似新闻（{{news.samenews_count}}）</a>
+                                <a target="_blank" ng-href="{{news.link}}">原链接</a> |
+                                <a target="_blank" ng-href="{{news.samenews_url}}">相似新闻（{{news.samenews_count}}）</a>
                             </div>
                             <hr>
                         </div>

@@ -58,11 +58,20 @@ $app->get('/weibo/:mid/stat/:num', function ($mid, $num) {
 
     $data = $q->fetchAll(PDO::FETCH_ASSOC);
 
+    $max = 0;
+    $min = 0;
+    foreach ($data as &$item) {
+        ($item['count'] > $max) ? $max = $item['count'] : null;
+        ($item['count'] < $min || $min == 0) ? $min = $item['count'] : null;
+    }
+
+    $range = ($max > $min) ? $max - $min : 1;
+
     $result = [];
     foreach ($data as &$item) {
         $result[] = [
             'text' => $item['word'],
-            'weight' => $item['count'],
+            'weight' => sqrt(($item['count'] - $min) / $range * 100) * 10,
         ];
     }
     echo json_encode($result);
@@ -98,9 +107,19 @@ SQL;
         return $a['date'] < $b['date'];
     });
 
+    $max = 0;
+    $min = 0;
+    foreach ($data as &$item) {
+        ($item['forward_count'] > $max) ? $max = $item['forward_count'] : null;
+        ($item['forward_count'] < $min || $min == 0) ? $min = $item['forward_count'] : null;
+    }
+    $range = ($max > $min) ? $max - $min : 1;
+
     foreach ($data as &$item) {
         $item['date_str'] = date('Y-m-d H:i:s', $item['date']);
+        $item['weight'] = sqrt(($item['forward_count'] - $min) / $range);
     }
+
     echo json_encode($data);
 });
 
@@ -156,7 +175,7 @@ $app->get('/weibo/:mid/word/:word/:num', function ($mid, $word, $num) {
     global $pdo;
 
     $sql = <<<SQL
-SELECT *, (forward_count + like_count  * 0.5 + LENGTH(wb_content_main) / 10) as forward_mark FROM `forward_info`
+SELECT *, (forward_count + like_count  * 0.5 + LENGTH(wb_content_main) / 100) as forward_mark FROM `forward_info`
 JOIN `user_info` ON `user_info`.`user_id` = `forward_info`.`user_id`
 WHERE origin_mid = :mid
 AND `forward_info`.`wb_content_main` LIKE :word
@@ -172,12 +191,14 @@ SQL;
 
     $data = $q->fetchAll(PDO::FETCH_ASSOC);
 
-    usort($data, function (&$a, &$b) {
-        return $a['date'] < $b['date'];
-    });
+//    usort($data, function (&$a, &$b) {
+//        return $a['date'] < $b['date'];
+//    });
 
     foreach ($data as &$item) {
         $item['date_str'] = date('Y-m-d H:i:s', $item['date']);
+
+        $item['wb_content'] = str_replace($word, "<span class='bg-yellow'>{$word}</span>", $item['wb_content']);
     }
 
     echo json_encode($data);
