@@ -1,3 +1,26 @@
+body{
+    background-color: #ecf0f5;
+}
+
 .forward-chart span {
     cursor: pointer;
 }
+
+.box-title{
+    font-weight: bold;
+}
+
+div.jqcloud { color: #09f; }
+div.jqcloud a { color: inherit; }
+div.jqcloud a:hover { color: #0df; }
+div.jqcloud a:hover { color: #0cf; }
+div.jqcloud span.w10 { color: #000; }
+div.jqcloud span.w9 { color: #000; }
+div.jqcloud span.w8 { color: #000; }
+div.jqcloud span.w7 { color: #000; }
+div.jqcloud span.w6 { color: #000; }
+div.jqcloud span.w5 { color: #000; }
+div.jqcloud span.w4 { color: #000; }
+div.jqcloud span.w3 { color: #000; }
+div.jqcloud span.w2 { color: #000; }
+div.jqcloud span.w1 { color: #000; }

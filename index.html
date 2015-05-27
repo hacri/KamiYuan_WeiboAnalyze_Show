@@ -63,17 +63,20 @@
                                 <i class="fa fa-user bg-aqua"></i>
 
                                 <div class="timeline-item">
-                                    <span class="time"><i class="fa fa-clock-o"></i> {{forward.date_str}} </span>
+                                    <span class="text-bold pull-right"><i class="fa fa-clock-o"></i> {{forward.date_str}} </span>
 
                                     <h3 class="timeline-header">
                                         <a target="_blank"
-                                           ng-href="http://weibo.com/u/{{forward.user_id}}">@{{forward.user_name}}</a>
+                                           ng-href="http://weibo.com/u/{{forward.user_id}}">@{{forward.user_name}}
+                                            <small class="label bg-yellow">xxoo</small>
+                                        </a>
                                     </h3>
 
                                     <div class="timeline-body">
                                         <div class="media">
                                             <div class="media-left media-middle">
-                                                <img class="media-object img-circle" style="width: {{forward.weight * 64 + 32}}px;height: {{forward.weight * 64 + 32}}px;"
+                                                <img class="media-object img-circle"
+                                                     style="width: {{forward.weight * 64 + 32}}px;height: {{forward.weight * 64 + 32}}px;"
                                                      ng-src="http://tp1.sinaimg.cn/{{forward.user_id}}/180/0/1">
                                             </div>
                                             <div class="media-body" ng-bind="forward.wb_content"></div>
@@ -90,14 +93,95 @@
                     </div>
                 </div>
 
+                <div class="box box-success">
+                    <div class="box-body text-bold">
+                        “重水”、“转基因”、“黄金大米”
+                    </div>
+                </div>
 
+                <div class="box box-success">
+                    <div class="box-header">
+                        <h3 class="box-title">相关微博</h3>
+
+                        <!--<div class="box-tools pull-right">-->
+                        <!--<a class="btn btn-success btn-xs">更多</a>-->
+                        <!--</div>-->
+                    </div>
+                    <div class="box-body">
+                        <div class="media" ng-repeat="news in chose.weibo_news">
+                            <div class="media-left media-middle">
+                                <img class="media-object img-circle" style="width: 64px;height: 64px;"
+                                     ng-src="http://tp2.sinaimg.cn/{{news.user_id}}/180/0/1">
+                            </div>
+                            <div class="media-body">
+                                @<span ng-bind="news.user_name"></span>
+                                <br>
+                                <span ng-bind="news.content"></span>
+                                <br>
+                                <a target="_blank" ng-href="{{news.picture}}" ng-if="!!news.picture">图片</a> |
+                                <a target="_blank" ng-href="{{news.url}}" ng-if="!!news.url">原微博</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <div class="pull-right">
+                            <a target="_blank" href="http://www.baidu.com" class="btn btn-success btn-xs">更多</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box box-success">
+                    <div class="box-header">
+                        <h3 class="box-title">相关新闻</h3>
+
+                        <!--<div class="box-tools pull-right">-->
+                        <!--<a class="btn btn-success btn-xs">更多</a>-->
+                        <!--</div>-->
+                    </div>
+                    <div class="box-body">
+                        <div class="media" ng-repeat="news in chose.other_naws">
+                            <div class="media-left media-middle">
+
+                            </div>
+                            <div class="media-body">
+                                <a target="_blank" ng-href="{{news.link}}">
+                                    <h4 ng-bind="news.title" class="text-bold"></h4>
+                                </a>
+                                <span ng-bind="news.pubdate" class="text-bold"></span>
+                                <br>
+                                <br>
+
+                                <p style="max-height: 100px;overflow: hidden"
+                                   ng-bind-html="chose.theHtml(news.body)"></p>
+                                <br>
+                                <a target="_blank" ng-href="{{news.link}}">原链接</a> |
+                                <a target="_blank" ng-href="{{news.samenews_url}}">相同新闻（{{news.samenews_count}}）</a>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <div class="pull-right">
+                            <a target="_blank" href="http://www.baidu.com" class="btn btn-success btn-xs">更多</a>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="col-md-4">
                 <div class="box box-success">
                     <div class="box-header">
-                        词语解释
+                        <h3 class="box-title">词语解释</h3>
                     </div>
+
+                    <div class="box-body" ng-repeat="search_item in chose.search">
+                        <p>关键词：<span ng-bind="search_item.keyword"></span></p>
+                        <img class="pull-right" width="100px;" ng-src="{{search_item.picture}}">
+
+                        <p ng-bind="search_item.body"></p>
+                        <a ng-href="{{search_item.wiki_link}}">维基百科</a>
+                    </div>
+
                     <form class="box-body" target="_blank"
                           action="http://zh.wikipedia.org/w/index.php"
                           method="get">
@@ -114,14 +198,6 @@
                             </span>
                         </div>
                     </form>
-
-                    <div class="box-body" ng-repeat="search_item in chose.search">
-                        <p>关键词：<span ng-bind="search_item.keyword"></span></p>
-                        <img class="pull-right" width="100px;" ng-src="{{search_item.picture}}">
-
-                        <p ng-bind="search_item.body"></p>
-                        <a ng-href="{{search_item.wiki_link}}">维基百科</a>
-                    </div>
                 </div>
 
                 <div class="box box-success">
@@ -159,68 +235,6 @@
                                     <hr>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-
-                <div class="box box-success">
-                    <div class="box-header">
-                        <h3 class="box-title">相关微博</h3>
-
-                        <!--<div class="box-tools pull-right">-->
-                            <!--<a class="btn btn-success btn-xs">更多</a>-->
-                        <!--</div>-->
-                    </div>
-                    <div class="box-body">
-                        <div class="media" ng-repeat="news in chose.weibo_news">
-                            <div class="media-left media-middle">
-                                <img class="media-object img-circle" style="width: 64px;height: 64px;"
-                                     ng-src="http://tp2.sinaimg.cn/{{news.user_id}}/180/0/1">
-                            </div>
-                            <div class="media-body">
-                                @<span ng-bind="news.user_name"></span>
-                                <br>
-                                <span ng-bind="news.content"></span>
-                                <br>
-                                <a target="_blank" ng-href="{{news.picture}}" ng-if="!!news.picture">图片</a> |
-                                <a target="_blank" ng-href="{{news.url}}" ng-if="!!news.url">原微博</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="box box-success">
-                    <div class="box-header">
-                        <h3 class="box-title">相关新闻</h3>
-
-                        <!--<div class="box-tools pull-right">-->
-                            <!--<a class="btn btn-success btn-xs">更多</a>-->
-                        <!--</div>-->
-                    </div>
-                    <div class="box-body">
-                        <div class="media" ng-repeat="news in chose.other_naws">
-                            <div class="media-left media-middle">
-
-                            </div>
-                            <div class="media-body">
-                                <h4 ng-bind="news.title"></h4>
-                                <span ng-bind="news.pubdate"></span>
-                                <br>
-                                <br>
-
-                                <p style="max-height: 100px;overflow: hidden"
-                                   ng-bind-html="chose.theHtml(news.body)"></p>
-                                <br>
-                                <a target="_blank" ng-href="{{news.link}}">原链接</a> |
-                                <a target="_blank" ng-href="{{news.samenews_url}}">相似新闻（{{news.samenews_count}}）</a>
-                            </div>
-                            <hr>
                         </div>
                     </div>
                 </div>
