@@ -198,7 +198,7 @@ SQL;
     foreach ($data as &$item) {
         $item['date_str'] = date('Y-m-d H:i:s', $item['date']);
 
-        $item['wb_content'] = str_replace($word, "<span class='bg-yellow'>{$word}</span>", $item['wb_content']);
+        $item['wb_content'] = str_replace($word, "<span class='text-red'>{$word}</span>", $item['wb_content']);
     }
 
     echo json_encode($data);
