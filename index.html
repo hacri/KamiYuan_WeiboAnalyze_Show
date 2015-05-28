@@ -37,14 +37,18 @@
                 <div class="box box-success">
                     <div class="box-body">
                         <div class="media">
-                            <div class="media-left media-middle">
+                            <div class="user-avatar media-left media-middle">
                                 <img class="media-object img-circle" style="width: 64px;height: 64px;"
                                      ng-src="http://tp2.sinaimg.cn/{{chose.origin_user.user_id}}/180/0/1">
                             </div>
                             <div class="media-body">
-                                <a target="_blank"
-                                           ng-href="http://weibo.com/u/{{chose.origin_user.user_id}}">@<span ng-bind="chose.origin_user.user_name"></span>
-								</a>
+                                <a class="user-info-name" target="_blank" ng-href="http://weibo.com/u/{{chose.origin_user.user_id}}">
+                                    @<span ng-bind="chose.origin_user.user_name"></span>
+
+                                    <div class="user-info-panel">
+                                        <img ng-src="/assert/{{chose.origin_user.user_id}}.png">
+                                    </div>
+                                </a>
                                 <br>
                                 <span ng-bind="chose.origin_weibo.weibo_content"></span>
                             </div>
@@ -70,7 +74,8 @@
                                     <h3 class="timeline-header">
                                         <a target="_blank"
                                            ng-href="http://weibo.com/u/{{forward.user_id}}">@{{forward.user_name}}
-                                            <small class="label bg-yellow" ng-show="!!forward.tag">{{forward.tag}}</small>
+                                            <small class="label bg-yellow" ng-show="!!forward.tag">{{forward.tag}}
+                                            </small>
                                         </a>
                                     </h3>
 
@@ -202,7 +207,7 @@
                 </div>
 
                 <div class="box box-success">
-				    <div class="box-header">
+                    <div class="box-header">
                         <h3 class="box-title">原微博转发中的热点词</h3>
                     </div>
                     <div class="box-body">

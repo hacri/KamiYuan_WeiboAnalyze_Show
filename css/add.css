@@ -10,6 +10,18 @@ body{
     font-weight: bold;
 }
 
+.user-info-panel{
+    display: none;
+    position: absolute;
+    top: 50px;
+    left: 60px;
+    z-index: 10;
+}
+
+.user-info-name:hover .user-info-panel{
+    display: block;
+}
+
 div.jqcloud { color: #09f; }
 div.jqcloud a { color: inherit; }
 div.jqcloud a:hover { color: #0df; }
