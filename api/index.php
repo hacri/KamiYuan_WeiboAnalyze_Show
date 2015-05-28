@@ -90,10 +90,11 @@ $app->get('/weibo/:mid/stat/:num', function ($mid, $num) {
 $app->get('/weibo/:mid/top/:num', function ($mid, $num) {
     global $pdo;
     $sql = <<<SQL
-SELECT *, (forward_count + like_count  * 0.5 + LENGTH(wb_content_main) / 10) as forward_mark FROM forward_info
+SELECT * FROM forward_info
 JOIN `user_info` ON `user_info`.`user_id` = `forward_info`.`user_id`
 WHERE origin_mid = :mid
-ORDER BY forward_mark DESC
+AND (`user_info`.`is_blue_v` = 1 OR `user_info`.`is_yellow_v` = 1)
+ORDER BY forward_count DESC
 LIMIT :num
 SQL;
     $q = $pdo->prepare($sql);

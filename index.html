@@ -70,7 +70,7 @@
                                     <h3 class="timeline-header">
                                         <a target="_blank"
                                            ng-href="http://weibo.com/u/{{forward.user_id}}">@{{forward.user_name}}
-                                            <small class="label bg-yellow">{{forward.tag}}</small>
+                                            <small class="label bg-yellow" ng-show="!!forward.tag">{{forward.tag}}</small>
                                         </a>
                                     </h3>
 
