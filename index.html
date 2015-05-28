@@ -95,13 +95,13 @@
 
                 <div class="box box-success">
                     <div class="box-body text-bold">
-                        “重水”、“转基因”、“黄金大米”
+                        关键词：<span ng-bind="chose.keyword_str"></span>
                     </div>
                 </div>
 
                 <div class="box box-success">
                     <div class="box-header">
-                        <h3 class="box-title">相关微博</h3>
+                        <h3 class="box-title">关于{{chose.keyword_str}}的其他原创微博</h3>
 
                         <!--<div class="box-tools pull-right">-->
                         <!--<a class="btn btn-success btn-xs">更多</a>-->
@@ -125,14 +125,14 @@
                     </div>
                     <div class="box-footer">
                         <div class="pull-right">
-                            <a target="_blank" href="http://s.weibo.com/" class="btn btn-success btn-xs">更多</a>
+                            <a target="_blank" ng-href="{{chose.more_news.weibo}}" class="btn btn-success btn-xs">更多</a>
                         </div>
                     </div>
                 </div>
 
                 <div class="box box-success">
                     <div class="box-header">
-                        <h3 class="box-title">相关新闻</h3>
+                        <h3 class="box-title">关于{{chose.keyword_str}}的相关新闻</h3>
 
                         <!--<div class="box-tools pull-right">-->
                         <!--<a class="btn btn-success btn-xs">更多</a>-->
@@ -154,7 +154,6 @@
                                 <p style="max-height: 100px;overflow: hidden"
                                    ng-bind-html="chose.theHtml(news.body)"></p>
                                 <br>
-                                <a target="_blank" ng-href="{{news.link}}">原链接</a> |
                                 <a target="_blank" ng-href="{{news.samenews_url}}">相同新闻（{{news.samenews_count}}）</a>
                             </div>
                             <hr>
@@ -162,7 +161,7 @@
                     </div>
                     <div class="box-footer">
                         <div class="pull-right">
-                            <a target="_blank" href="http://www.baidu.com" class="btn btn-success btn-xs">更多</a>
+                            <a target="_blank" ng-href="{{chose.more_news.baidu}}" class="btn btn-success btn-xs">更多</a>
                         </div>
                     </div>
                 </div>
@@ -201,6 +200,9 @@
                 </div>
 
                 <div class="box box-success">
+                    <div class="box-header">
+                        <h3 class="box-title">原微博转发中的热点词</h3>
+                    </div>
                     <div class="box-body">
                         <div class="forward-chart" style="width: 340px; height: 400px;"></div>
                     </div>

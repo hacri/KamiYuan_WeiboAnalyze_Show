@@ -21,6 +21,9 @@ angular.module('app', []).
         chose.other_naws = [];
 
         chose.search = [];
+        chose.keywords = [];
+        chose.keyword_str = '';
+        chose.more_news = {};
 
         var get_word_weibo = function () {
             var word = $(this).text();
@@ -66,6 +69,18 @@ angular.module('app', []).
 
             $http.get('/api/weibo/' + mid + '/search').success(function (data) {
                 chose.search = data;
+            });
+
+            $http.get('/api/weibo/' + mid + '/keyword').success(function (data) {
+                chose.keywords = data;
+                angular.forEach(data, function (value, key) {
+                    data[key] = '“' + value + '”'
+                });
+                chose.keyword_str = data.join('、');
+            });
+
+            $http.get('/api/weibo/' + mid + '/more_news').success(function (data) {
+                chose.more_news = data;
             });
 
         };

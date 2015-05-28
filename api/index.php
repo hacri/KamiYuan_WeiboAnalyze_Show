@@ -204,6 +204,49 @@ SQL;
     echo json_encode($data);
 });
 
+$app->get('/weibo/:mid/keyword', function ($mid) {
+    global $pdo;
+
+    $sql = <<<SQL
+SELECT * FROM `keyword`
+WHERE `mid` = :mid
+SQL;
+
+    $q = $pdo->prepare($sql);
+    $q->bindValue(':mid', $mid);
+    $q->execute();
+
+    $data = $q->fetchAll(PDO::FETCH_ASSOC);
+
+    $keywords = [];
+    foreach ($data as &$row) {
+        $keywords[] = $row['keyword'];
+    }
+
+    echo json_encode($keywords);
+});
+
+$app->get('/weibo/:mid/more_news', function ($mid) {
+    global $pdo;
+
+    $sql = <<<SQL
+SELECT * FROM `more_news`
+WHERE `mid` = :mid
+SQL;
+
+    $q = $pdo->prepare($sql);
+    $q->bindValue(':mid', $mid);
+    $q->execute();
+
+    $data = $q->fetchAll(PDO::FETCH_ASSOC);
+
+    $result = [];
+    foreach ($data as &$row) {
+        $result[$row['weibo_or_baidu_news']] = $row['URL'];
+    }
+    echo json_encode($result);
+});
+
 $app->get('/user/:uid', function ($uid) {
     global $pdo;
     $sql = <<<SQL
