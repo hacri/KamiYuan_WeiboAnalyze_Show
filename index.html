@@ -42,7 +42,9 @@
                                      ng-src="http://tp2.sinaimg.cn/{{chose.origin_user.user_id}}/180/0/1">
                             </div>
                             <div class="media-body">
-                                @<span ng-bind="chose.origin_user.user_name"></span>
+                                <a target="_blank"
+                                           ng-href="http://weibo.com/u/{{chose.origin_user.user_id}}">@<span ng-bind="chose.origin_user.user_name"></span>
+								</a>
                                 <br>
                                 <span ng-bind="chose.origin_weibo.weibo_content"></span>
                             </div>
@@ -55,7 +57,7 @@
 
                 <div class="box box-success">
                     <div class="box-header">
-                        <h3 class="box-title">微博重要转发</h3>
+                        <h3 class="box-title">微博重要转发时间轴</h3>
                     </div>
                     <div class="box-body">
                         <ul class="timeline">
@@ -68,7 +70,7 @@
                                     <h3 class="timeline-header">
                                         <a target="_blank"
                                            ng-href="http://weibo.com/u/{{forward.user_id}}">@{{forward.user_name}}
-                                            <small class="label bg-yellow">xxoo</small>
+                                            <small class="label bg-yellow">{{forward.tag}}</small>
                                         </a>
                                     </h3>
 
@@ -200,7 +202,7 @@
                 </div>
 
                 <div class="box box-success">
-                    <div class="box-header">
+				    <div class="box-header">
                         <h3 class="box-title">原微博转发中的热点词</h3>
                     </div>
                     <div class="box-body">
