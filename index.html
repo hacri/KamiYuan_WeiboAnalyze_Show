@@ -19,7 +19,7 @@
         <div class="col-md-6">
             <div class="box box-success">
                 <div class="box-header with-border">
-                    <h3 class="box-title">选择微博</h3>
+                    <h3 class="box-title">输入微博URL</h3>
                 </div>
                 <div class="box-body no-padding">
                     <ul class="list-group">
@@ -61,7 +61,7 @@
 
                 <div class="box box-success">
                     <div class="box-header">
-                        <h3 class="box-title">微博重要转发时间轴</h3>
+                        <h3 class="box-title">此微博重要转发时间轴</h3>
                     </div>
                     <div class="box-body">
                         <ul class="timeline">
@@ -97,12 +97,6 @@
                                 </div>
                             </li>
                         </ul>
-                    </div>
-                </div>
-
-                <div class="box box-success">
-                    <div class="box-body text-bold">
-                        关键词：<span ng-bind="chose.keyword_str"></span>
                     </div>
                 </div>
 
@@ -161,7 +155,7 @@
                                 <p style="max-height: 100px;overflow: hidden"
                                    ng-bind-html="chose.theHtml(news.body)"></p>
                                 <br>
-                                <a target="_blank" ng-href="{{news.samenews_url}}">相同新闻（{{news.samenews_count}}）</a>
+                                <a target="_blank" ng-href="{{news.samenews_url}}">来自{{news.source}}等{{news.samenews_count}}条相同新闻</a>
                             </div>
                             <hr>
                         </div>
@@ -177,7 +171,7 @@
             <div class="col-md-4">
                 <div class="box box-success">
                     <div class="box-header">
-                        <h3 class="box-title">词语解释</h3>
+                        <h3 class="box-title">术语解释</h3>
                     </div>
 
                     <div class="box-body" ng-repeat="search_item in chose.search">
@@ -194,7 +188,7 @@
                         <input type="hidden" name="title" value="Specail:搜索">
                         <input type="hidden" name="go" value="前往">
 
-                        还有不懂的词语可以进行搜索：
+                        其他术语可在此进行搜索：
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="搜索内容" name="search">
                             <span class="input-group-btn">
@@ -208,7 +202,8 @@
 
                 <div class="box box-success">
                     <div class="box-header">
-                        <h3 class="box-title">原微博转发中的热点词</h3>
+                        <h3 class="box-title">此微博转发中的热点词</h3>
+						<p class="box-body">点击下方词语可查看相关转发内容</p>
                     </div>
                     <div class="box-body">
                         <div class="forward-chart" style="width: 340px; height: 400px;"></div>
