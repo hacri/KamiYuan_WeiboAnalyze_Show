@@ -119,7 +119,8 @@ SQL;
 
     foreach ($data as &$item) {
         $item['date_str'] = date('Y-m-d H:i:s', $item['date']);
-        $item['weight'] = sqrt(($item['forward_count'] - $min) / $range);
+        $item['weight'] = sqrt(($item['forward_count'] - $min + 1) / $range);
+//        $item['weight'] = (($item['forward_count'] - $min) / $range);
     }
 
     echo json_encode($data);
